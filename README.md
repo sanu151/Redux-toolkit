@@ -242,3 +242,72 @@ This will increment the counter by 5.
 - **Conditional state updates:** Using the payload to determine how the state should be updated based on specific conditions.
 - **Batch actions:** Combining multiple actions into a single action with a payload containing an array of changes.
 
+### **Multiple Reducers and `combineReducers`**
+
+As your application grows, managing a single, monolithic reducer can become cumbersome. To address this, Redux provides the `combineReducers` function, which allows you to split your state into smaller, more manageable pieces, each handled by its own reducer.
+
+**How `combineReducers` Works:**
+
+1. **Create Multiple Reducers:**
+   - Each reducer handles a specific slice of the state.
+   - Reducers are pure functions that take the current state and an action, returning the new state.
+
+2. **Combine Reducers:**
+   - Use the `combineReducers` function to combine multiple reducers into a single root reducer.
+   - This creates a new reducer that handles the entire application state.
+
+3. **Provide the Root Reducer to the Store:**
+   - Pass the combined reducer to the `createStore` function to create the store.
+
+**Example:**
+
+```javascript
+import { combineReducers } from 'redux';
+
+// Reducer for the counter slice
+const counterReducer = (state = { count: 0 }, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    default:
+      return state;
+  }
+};
+
+// Reducer for the theme slice
+const themeReducer = (state = { theme: 'light' }, action) => {
+  switch (action.type) {
+    case 'TOGGLE_THEME':
+      return { theme: state.theme === 'light' ? 'dark' : 'light' };
+    default:
+      return state;
+  }
+};
+
+// Combine reducers
+const rootReducer = combineReducers({
+  counter: counterReducer,
+  theme: themeReducer
+});
+
+// Create the store
+const store = createStore(rootReducer);
+```
+
+**Key Points:**
+
+- **State Shape:** The combined state will be an object with keys corresponding to the reducer names.
+- **Accessing State:** To access a specific slice of the state, use dot notation:
+   ```javascript
+   const state = store.getState();
+   const count = state.counter.count;
+   const theme = state.theme.theme;
+   ```
+- **Dispatching Actions:** Dispatching actions remains the same. The reducer responsible for handling the action will be invoked.
+
+**Benefits of `combineReducers`:**
+
+- **Improved Organization:** Separating concerns into smaller reducers makes your code more modular and easier to maintain.
+- **Scalability:** As your application grows, adding new features becomes simpler by introducing new reducers.
+- **Testability:** Testing individual reducers becomes more straightforward.
+
