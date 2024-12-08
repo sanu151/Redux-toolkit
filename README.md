@@ -1,4 +1,6 @@
-![image](https://github.com/user-attachments/assets/aa11001b-3c7b-4a99-a90d-9b2c24c955fa)
+
+![image](https://github.com/user-attachments/assets/71ea29a0-b113-4756-b29e-8eb26a9ae73d)
+
 
 # Redux
 
