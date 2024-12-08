@@ -7,6 +7,7 @@ const ADD_USER = "ADD_USER";
 // state
 const initialUser = {
   users: ["Supriyo Das"],
+  count: 1,
 };
 
 // action
@@ -23,6 +24,7 @@ const userReducer = (state = initialUser, action) => {
     case ADD_USER:
       return {
         users: [...state.users, action.payload],
+        count: state.count + 1,
       };
     default:
       state;
