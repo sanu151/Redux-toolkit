@@ -78,7 +78,8 @@ store.dispatch(incrementAction);
 
 Redux is a powerful state management library for JavaScript applications. It helps manage complex application state in a predictable and organized way.
 
-**Core Concepts:**
+### **Core Concepts:**
+
 ![image](https://github.com/user-attachments/assets/c40fd40c-9ccb-40c2-9b1b-e7b6ee73d8dc)
 
 
