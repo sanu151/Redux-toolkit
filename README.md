@@ -629,3 +629,103 @@ function App() {
 - **State Management:** The reducer manages the loading, data, and error states.
 - **Component Rendering:** The component re-renders based on the updated state, providing a seamless user experience.
 
+## **React Toolkit**
+
+React Toolkit simplifies Redux development by providing a number of helpful utilities and conventions. 
+
+### Create a Counter App using React Toolkit
+
+**1. Install React Toolkit:**
+
+```bash
+npm install @reduxjs/toolkit
+```
+
+**2. Create a Redux Slice:**
+
+```javascript
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  value: 0,
+};
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+    decrement: (state) => {
+      state.value -= 1;
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload;
+    },
+  },
+});
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+
+export default counterSlice.reducer;
+```
+
+**3. Create a React Component:**
+
+```javascript
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { increment, decrement, incrementByAmount } from './counterSlice';
+
+function Counter() {
+  const count = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
+      <button onClick={() => dispatch(incrementByAmount(5))}>Increment by 5</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+**4. Set Up the Store:**
+
+```javascript
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './counterSlice';
+
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+```
+
+**Explanation:**
+
+1. **Redux Toolkit Slice:**
+   - Defines the initial state, action types, and action reducers.
+   - The `createSlice` helper function generates action creators and reducer functions.
+
+2. **React Component:**
+   - Uses `useSelector` to access the `count` state.
+   - Uses `useDispatch` to dispatch actions to the Redux store.
+   - Dispatches the appropriate action on button clicks.
+
+3. **Store Configuration:**
+   - Uses `configureStore` to create the Redux store.
+   - Adds the `counterReducer` to the store's reducer.
+
+**Key Benefits of Using React Toolkit:**
+
+- **Simplified State Management:** The `createSlice` helper function makes it easier to define state slices and actions.
+- **Immer Integration:** Immutability is handled automatically, reducing boilerplate code.
+- **Enhanced Developer Experience:** Clear syntax, concise code, and improved tooling.
+
